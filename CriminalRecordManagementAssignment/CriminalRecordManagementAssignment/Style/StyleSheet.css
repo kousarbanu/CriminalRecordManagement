@@ -1,0 +1,17 @@
+﻿#leftbox {
+    float: left;
+    width: 45%;
+}
+
+
+
+#rightbox {
+    float: right;
+    width: 55%;
+}
+
+
+
+figcaption {
+    font-size: 20px;
+}

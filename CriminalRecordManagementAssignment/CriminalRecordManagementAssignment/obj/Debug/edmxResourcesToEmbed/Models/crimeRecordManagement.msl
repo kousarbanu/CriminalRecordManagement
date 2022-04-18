@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CrimalProjectModelStoreContainer" CdmEntityContainer="CrimalProjectEntities">
+    <EntitySetMapping Name="Crimes">
+      <EntityTypeMapping TypeName="CrimalProjectModel.Crime">
+        <MappingFragment StoreEntitySet="Crimes">
+          <ScalarProperty Name="Crime_ID" ColumnName="Crime_ID" />
+          <ScalarProperty Name="Crime_Name" ColumnName="Crime_Name" />
+          <ScalarProperty Name="Victim_id" ColumnName="Victim_id" />
+          <ScalarProperty Name="Officer" ColumnName="Officer" />
+          <ScalarProperty Name="Officer_Position" ColumnName="Officer_Position" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Criminals">
+      <EntityTypeMapping TypeName="CrimalProjectModel.Criminal">
+        <MappingFragment StoreEntitySet="Criminals">
+          <ScalarProperty Name="Criminal_ID" ColumnName="Criminal_ID" />
+          <ScalarProperty Name="Criminal_Name" ColumnName="Criminal_Name" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Jail_id" ColumnName="Jail_id" />
+          <ScalarProperty Name="Victim_id" ColumnName="Victim_id" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jails">
+      <EntityTypeMapping TypeName="CrimalProjectModel.Jail">
+        <MappingFragment StoreEntitySet="Jails">
+          <ScalarProperty Name="Jail_ID" ColumnName="Jail_ID" />
+          <ScalarProperty Name="Jail_Name" ColumnName="Jail_Name" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="Jailer" ColumnName="Jailer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Positions">
+      <EntityTypeMapping TypeName="CrimalProjectModel.Position">
+        <MappingFragment StoreEntitySet="Positions">
+          <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
+          <ScalarProperty Name="Position_Name" ColumnName="Position_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="CrimalProjectModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+          <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+          <ScalarProperty Name="Position_id" ColumnName="Position_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Victims">
+      <EntityTypeMapping TypeName="CrimalProjectModel.Victim">
+        <MappingFragment StoreEntitySet="Victims">
+          <ScalarProperty Name="Victim_ID" ColumnName="Victim_ID" />
+          <ScalarProperty Name="Victim_Name" ColumnName="Victim_Name" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="DODeath" ColumnName="DODeath" />
+          <ScalarProperty Name="Cause_Of_Death" ColumnName="Cause_Of_Death" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

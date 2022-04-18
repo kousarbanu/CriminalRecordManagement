@@ -1,0 +1,50 @@
+﻿@model CriminalRecordManagementAssignment.Models.Jail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Jail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Jail_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jail_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pincode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pincode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jailer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jailer)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Jail_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

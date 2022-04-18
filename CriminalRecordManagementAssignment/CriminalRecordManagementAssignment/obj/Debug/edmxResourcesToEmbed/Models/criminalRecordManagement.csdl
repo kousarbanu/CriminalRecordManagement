@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CrimalProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Crime">
+    <Key>
+      <PropertyRef Name="Crime_ID" />
+    </Key>
+    <Property Name="Crime_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Crime_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Victim_id" Type="Int32" />
+    <Property Name="Officer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Officer_Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Victim" Relationship="Self.FK_Victim_Crimes" FromRole="Crimes" ToRole="Victims" />
+  </EntityType>
+  <EntityType Name="Criminal">
+    <Key>
+      <PropertyRef Name="Criminal_ID" />
+    </Key>
+    <Property Name="Criminal_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Criminal_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Jail_id" Type="Int32" />
+    <Property Name="Victim_id" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Jail" Relationship="Self.FK_Jails_Criminals" FromRole="Criminals" ToRole="Jails" />
+    <NavigationProperty Name="Victim" Relationship="Self.FK_Victims_Criminals" FromRole="Criminals" ToRole="Victims" />
+  </EntityType>
+  <EntityType Name="Jail">
+    <Key>
+      <PropertyRef Name="Jail_ID" />
+    </Key>
+    <Property Name="Jail_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Jail_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Pincode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Jailer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Criminals" Relationship="Self.FK_Jails_Criminals" FromRole="Jails" ToRole="Criminals" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="Position_ID" />
+    </Key>
+    <Property Name="Position_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Position_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Positions_Users" FromRole="Positions" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="User_Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Position_id" Type="Int32" />
+    <NavigationProperty Name="Position" Relationship="Self.FK_Positions_Users" FromRole="Users" ToRole="Positions" />
+  </EntityType>
+  <EntityType Name="Victim">
+    <Key>
+      <PropertyRef Name="Victim_ID" />
+    </Key>
+    <Property Name="Victim_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Victim_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="DODeath" Type="DateTime" Precision="0" />
+    <Property Name="Cause_Of_Death" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Crimes" Relationship="Self.FK_Victim_Crimes" FromRole="Victims" ToRole="Crimes" />
+    <NavigationProperty Name="Criminals" Relationship="Self.FK_Victims_Criminals" FromRole="Victims" ToRole="Criminals" />
+  </EntityType>
+  <Association Name="FK_Victim_Crimes">
+    <End Role="Victims" Type="Self.Victim" Multiplicity="0..1" />
+    <End Role="Crimes" Type="Self.Crime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Victims">
+        <PropertyRef Name="Victim_ID" />
+      </Principal>
+      <Dependent Role="Crimes">
+        <PropertyRef Name="Victim_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Jails_Criminals">
+    <End Role="Jails" Type="Self.Jail" Multiplicity="0..1" />
+    <End Role="Criminals" Type="Self.Criminal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jails">
+        <PropertyRef Name="Jail_ID" />
+      </Principal>
+      <Dependent Role="Criminals">
+        <PropertyRef Name="Jail_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Victims_Criminals">
+    <End Role="Victims" Type="Self.Victim" Multiplicity="0..1" />
+    <End Role="Criminals" Type="Self.Criminal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Victims">
+        <PropertyRef Name="Victim_ID" />
+      </Principal>
+      <Dependent Role="Criminals">
+        <PropertyRef Name="Victim_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Positions_Users">
+    <End Role="Positions" Type="Self.Position" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Positions">
+        <PropertyRef Name="Position_ID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="Position_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CrimalProjectEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Crimes" EntityType="Self.Crime" />
+    <EntitySet Name="Criminals" EntityType="Self.Criminal" />
+    <EntitySet Name="Jails" EntityType="Self.Jail" />
+    <EntitySet Name="Positions" EntityType="Self.Position" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Victims" EntityType="Self.Victim" />
+    <AssociationSet Name="FK_Victim_Crimes" Association="Self.FK_Victim_Crimes">
+      <End Role="Victims" EntitySet="Victims" />
+      <End Role="Crimes" EntitySet="Crimes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Jails_Criminals" Association="Self.FK_Jails_Criminals">
+      <End Role="Jails" EntitySet="Jails" />
+      <End Role="Criminals" EntitySet="Criminals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Victims_Criminals" Association="Self.FK_Victims_Criminals">
+      <End Role="Victims" EntitySet="Victims" />
+      <End Role="Criminals" EntitySet="Criminals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Positions_Users" Association="Self.FK_Positions_Users">
+      <End Role="Positions" EntitySet="Positions" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

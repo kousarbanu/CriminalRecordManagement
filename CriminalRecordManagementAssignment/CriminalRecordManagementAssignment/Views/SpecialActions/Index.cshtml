@@ -1,0 +1,28 @@
+﻿@model IEnumerable<CriminalRecordManagementAssignment.Models.Criminal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div id="boxes">
+    <div id="leftbox">
+        <h2>Victim</h2>
+        <img src="../@ViewBag.Victim.Image" width="300px" height="380px" />
+        <figcaption>@ViewBag.Victim.Victim_Name</figcaption>
+    </div>
+
+
+
+    <div id="rightbox">
+        <h2>Criminals</h2>
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4">
+                <img src="../@Html.DisplayFor(modelItem => item.Image)" width="100px" height="120px" />
+                <figcaption>@Html.DisplayFor(modelItem => item.Criminal_Name)</figcaption>
+            </div>
+        }
+    </div>
+</div>

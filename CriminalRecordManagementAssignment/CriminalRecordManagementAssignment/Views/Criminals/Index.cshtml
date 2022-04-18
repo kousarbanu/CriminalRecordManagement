@@ -1,0 +1,87 @@
+﻿@model IEnumerable<CriminalRecordManagementAssignment.Models.Criminal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @if (User.IsInRole("ACP") || User.IsInRole("PC") || User.IsInRole("DCP"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+    </p>
+@using (@Html.BeginForm())
+{
+    <input class="form-control" type="search" name="SearchFilter" placeholder="Search Criminals" aria-label="Search">
+    <input class="btn btn-outline-success my-2" type="submit" value="Search">
+}
+<table class="table blur table-bordered table-striped">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Criminal_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Jail.Jail_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Victim.Victim_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Criminal_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Jail.Jail_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Victim.Victim_Name)
+
+            </td>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.Image)" height="80" width="80" />
+
+            </td>
+            <td>
+                @if (User.IsInRole("ACP") || User.IsInRole("PC") || User.IsInRole("DCP"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Criminal_ID }) <text>|</text>
+
+                }
+                @if (User.IsInRole("ACP") || User.IsInRole("PC") || User.IsInRole("DCP") || User.IsInRole("JCP"))
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.Criminal_ID }) <text>|</text>
+                }
+                @if (User.IsInRole("ACP") || User.IsInRole("PC") || User.IsInRole("DCP"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Criminal_ID })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

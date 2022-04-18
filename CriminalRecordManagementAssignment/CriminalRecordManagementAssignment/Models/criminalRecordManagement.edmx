@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CrimalProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Crimes">
+          <Key>
+            <PropertyRef Name="Crime_ID" />
+          </Key>
+          <Property Name="Crime_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Crime_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Victim_id" Type="int" />
+          <Property Name="Officer" Type="varchar" MaxLength="50" />
+          <Property Name="Officer_Position" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Criminals">
+          <Key>
+            <PropertyRef Name="Criminal_ID" />
+          </Key>
+          <Property Name="Criminal_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Criminal_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Jail_id" Type="int" />
+          <Property Name="Victim_id" Type="int" />
+          <Property Name="Image" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Jails">
+          <Key>
+            <PropertyRef Name="Jail_ID" />
+          </Key>
+          <Property Name="Jail_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Jail_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pincode" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="Jailer" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="Position_ID" />
+          </Key>
+          <Property Name="Position_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Position_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_Password" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Position_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Victims">
+          <Key>
+            <PropertyRef Name="Victim_ID" />
+          </Key>
+          <Property Name="Victim_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Victim_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="DODeath" Type="date" />
+          <Property Name="Cause_Of_Death" Type="varchar" MaxLength="100" />
+          <Property Name="Image" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Jails_Criminals">
+          <End Role="Jails" Type="Self.Jails" Multiplicity="0..1" />
+          <End Role="Criminals" Type="Self.Criminals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jails">
+              <PropertyRef Name="Jail_ID" />
+            </Principal>
+            <Dependent Role="Criminals">
+              <PropertyRef Name="Jail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Positions_Users">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Victim_Crimes">
+          <End Role="Victims" Type="Self.Victims" Multiplicity="0..1" />
+          <End Role="Crimes" Type="Self.Crimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Victims">
+              <PropertyRef Name="Victim_ID" />
+            </Principal>
+            <Dependent Role="Crimes">
+              <PropertyRef Name="Victim_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Victims_Criminals">
+          <End Role="Victims" Type="Self.Victims" Multiplicity="0..1" />
+          <End Role="Criminals" Type="Self.Criminals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Victims">
+              <PropertyRef Name="Victim_ID" />
+            </Principal>
+            <Dependent Role="Criminals">
+              <PropertyRef Name="Victim_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrimalProjectModelStoreContainer">
+          <EntitySet Name="Crimes" EntityType="Self.Crimes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Criminals" EntityType="Self.Criminals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jails" EntityType="Self.Jails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Victims" EntityType="Self.Victims" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Jails_Criminals" Association="Self.FK_Jails_Criminals">
+            <End Role="Jails" EntitySet="Jails" />
+            <End Role="Criminals" EntitySet="Criminals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Positions_Users" Association="Self.FK_Positions_Users">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Victim_Crimes" Association="Self.FK_Victim_Crimes">
+            <End Role="Victims" EntitySet="Victims" />
+            <End Role="Crimes" EntitySet="Crimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Victims_Criminals" Association="Self.FK_Victims_Criminals">
+            <End Role="Victims" EntitySet="Victims" />
+            <End Role="Criminals" EntitySet="Criminals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CrimalProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Crime">
+          <Key>
+            <PropertyRef Name="Crime_ID" />
+          </Key>
+          <Property Name="Crime_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Crime_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Victim_id" Type="Int32" />
+          <Property Name="Officer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Officer_Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Victim" Relationship="Self.FK_Victim_Crimes" FromRole="Crimes" ToRole="Victims" />
+        </EntityType>
+        <EntityType Name="Criminal">
+          <Key>
+            <PropertyRef Name="Criminal_ID" />
+          </Key>
+          <Property Name="Criminal_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Criminal_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Jail_id" Type="Int32" />
+          <Property Name="Victim_id" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Jail" Relationship="Self.FK_Jails_Criminals" FromRole="Criminals" ToRole="Jails" />
+          <NavigationProperty Name="Victim" Relationship="Self.FK_Victims_Criminals" FromRole="Criminals" ToRole="Victims" />
+        </EntityType>
+        <EntityType Name="Jail">
+          <Key>
+            <PropertyRef Name="Jail_ID" />
+          </Key>
+          <Property Name="Jail_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Jail_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pincode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Jailer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Criminals" Relationship="Self.FK_Jails_Criminals" FromRole="Jails" ToRole="Criminals" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Position_ID" />
+          </Key>
+          <Property Name="Position_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Position_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Positions_Users" FromRole="Positions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Position_id" Type="Int32" />
+          <NavigationProperty Name="Position" Relationship="Self.FK_Positions_Users" FromRole="Users" ToRole="Positions" />
+        </EntityType>
+        <EntityType Name="Victim">
+          <Key>
+            <PropertyRef Name="Victim_ID" />
+          </Key>
+          <Property Name="Victim_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Victim_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="DODeath" Type="DateTime" Precision="0" />
+          <Property Name="Cause_Of_Death" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Crimes" Relationship="Self.FK_Victim_Crimes" FromRole="Victims" ToRole="Crimes" />
+          <NavigationProperty Name="Criminals" Relationship="Self.FK_Victims_Criminals" FromRole="Victims" ToRole="Criminals" />
+        </EntityType>
+        <Association Name="FK_Victim_Crimes">
+          <End Role="Victims" Type="Self.Victim" Multiplicity="0..1" />
+          <End Role="Crimes" Type="Self.Crime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Victims">
+              <PropertyRef Name="Victim_ID" />
+            </Principal>
+            <Dependent Role="Crimes">
+              <PropertyRef Name="Victim_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jails_Criminals">
+          <End Role="Jails" Type="Self.Jail" Multiplicity="0..1" />
+          <End Role="Criminals" Type="Self.Criminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jails">
+              <PropertyRef Name="Jail_ID" />
+            </Principal>
+            <Dependent Role="Criminals">
+              <PropertyRef Name="Jail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Victims_Criminals">
+          <End Role="Victims" Type="Self.Victim" Multiplicity="0..1" />
+          <End Role="Criminals" Type="Self.Criminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Victims">
+              <PropertyRef Name="Victim_ID" />
+            </Principal>
+            <Dependent Role="Criminals">
+              <PropertyRef Name="Victim_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Positions_Users">
+          <End Role="Positions" Type="Self.Position" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrimalProjectEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Crimes" EntityType="Self.Crime" />
+          <EntitySet Name="Criminals" EntityType="Self.Criminal" />
+          <EntitySet Name="Jails" EntityType="Self.Jail" />
+          <EntitySet Name="Positions" EntityType="Self.Position" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Victims" EntityType="Self.Victim" />
+          <AssociationSet Name="FK_Victim_Crimes" Association="Self.FK_Victim_Crimes">
+            <End Role="Victims" EntitySet="Victims" />
+            <End Role="Crimes" EntitySet="Crimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jails_Criminals" Association="Self.FK_Jails_Criminals">
+            <End Role="Jails" EntitySet="Jails" />
+            <End Role="Criminals" EntitySet="Criminals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Victims_Criminals" Association="Self.FK_Victims_Criminals">
+            <End Role="Victims" EntitySet="Victims" />
+            <End Role="Criminals" EntitySet="Criminals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Positions_Users" Association="Self.FK_Positions_Users">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CrimalProjectModelStoreContainer" CdmEntityContainer="CrimalProjectEntities1">
+          <EntitySetMapping Name="Crimes">
+            <EntityTypeMapping TypeName="CrimalProjectModel.Crime">
+              <MappingFragment StoreEntitySet="Crimes">
+                <ScalarProperty Name="Crime_ID" ColumnName="Crime_ID" />
+                <ScalarProperty Name="Crime_Name" ColumnName="Crime_Name" />
+                <ScalarProperty Name="Victim_id" ColumnName="Victim_id" />
+                <ScalarProperty Name="Officer" ColumnName="Officer" />
+                <ScalarProperty Name="Officer_Position" ColumnName="Officer_Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Criminals">
+            <EntityTypeMapping TypeName="CrimalProjectModel.Criminal">
+              <MappingFragment StoreEntitySet="Criminals">
+                <ScalarProperty Name="Criminal_ID" ColumnName="Criminal_ID" />
+                <ScalarProperty Name="Criminal_Name" ColumnName="Criminal_Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Jail_id" ColumnName="Jail_id" />
+                <ScalarProperty Name="Victim_id" ColumnName="Victim_id" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jails">
+            <EntityTypeMapping TypeName="CrimalProjectModel.Jail">
+              <MappingFragment StoreEntitySet="Jails">
+                <ScalarProperty Name="Jail_ID" ColumnName="Jail_ID" />
+                <ScalarProperty Name="Jail_Name" ColumnName="Jail_Name" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Jailer" ColumnName="Jailer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="CrimalProjectModel.Position">
+              <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
+                <ScalarProperty Name="Position_Name" ColumnName="Position_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CrimalProjectModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="Position_id" ColumnName="Position_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Victims">
+            <EntityTypeMapping TypeName="CrimalProjectModel.Victim">
+              <MappingFragment StoreEntitySet="Victims">
+                <ScalarProperty Name="Victim_ID" ColumnName="Victim_ID" />
+                <ScalarProperty Name="Victim_Name" ColumnName="Victim_Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="DODeath" ColumnName="DODeath" />
+                <ScalarProperty Name="Cause_Of_Death" ColumnName="Cause_Of_Death" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
